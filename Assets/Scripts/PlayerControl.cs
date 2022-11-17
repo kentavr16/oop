@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    public GameObject bullet;
     public float userInputHorizontal;
     private float userInputVertical;
     private Rigidbody playerRb;
     public float rotationSpeed = 100;
     public float moveSpeed;
+    public Vector3 bulletVector;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Move();
+        Shoot();
+        bulletVector = transform.GetChild(0).position - transform.position;
     }
 
     private void Move()
@@ -28,4 +32,14 @@ public class PlayerControl : MonoBehaviour
         transform.Translate(Vector3.forward * (userInputVertical * -1)* moveSpeed* Time.deltaTime);
         transform.Rotate(Vector3.up * userInputHorizontal * rotationSpeed * Time.deltaTime);
     }
+
+    private void Shoot()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bullet,transform.position+ (bulletVector *2),bullet.transform.rotation);
+        }
+    }
+    
+
 }
