@@ -5,23 +5,28 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private GameObject player;
+    private Rigidbody enemyRB;
     private Vector3 moveVector;
-    private float speed=0.3f;
+    private float speed=40;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
+        enemyRB = GetComponent<Rigidbody>();
+
+        player = GameObject.Find("Player");
+
         Move();
     }
     private void Move()
     {
         moveVector = transform.position - player.transform.position;
-        transform.Translate(-moveVector * speed * Time.deltaTime);
+       // transform.Translate(-moveVector * speed * Time.deltaTime);
+       enemyRB.AddForce(-moveVector * speed * Time.deltaTime);
     }
     private void OnTriggerEnter(Collider other)
     {
