@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     private Vector3 moveVector;
-    private float speed=0.1f;
+    private float speed=0.3f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -22,5 +22,13 @@ public class Enemy : MonoBehaviour
     {
         moveVector = transform.position - player.transform.position;
         transform.Translate(-moveVector * speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("bullet"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }
