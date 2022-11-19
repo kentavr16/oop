@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    public GameObject powerup;
     public GameObject bullet;
     public float userInputHorizontal;
     private float userInputVertical;
@@ -11,10 +13,14 @@ public class PlayerControl : MonoBehaviour
     public float rotationSpeed = 100;
     public float moveSpeed;
     public Vector3 bulletVector;
+    private int health = 100;
+    public TextMeshProUGUI healthDisplay;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        healthDisplay.text = "Health: " + health +"%";
+
     }
 
     // Update is called once per frame
@@ -25,7 +31,7 @@ public class PlayerControl : MonoBehaviour
         bulletVector = transform.GetChild(0).position - transform.position;
     }
 
-    private void Move()
+    public virtual void Move()
     {
         userInputHorizontal = Input.GetAxis("Horizontal");
         userInputVertical = Input.GetAxis("Vertical");
@@ -46,6 +52,34 @@ public class PlayerControl : MonoBehaviour
             Instantiate(bullet,transform.position+ (bulletVector *2),bullet.transform.rotation);
         }
     }
-    
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        EnemyCollision(collision);
+    }
+    public virtual void EnemyCollision(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (health == 0)
+            {
+                healthDisplay.text = "Game over";
+                return;
+            }
+
+            health -= 10;
+            healthDisplay.text = "Health: " + health + "%";
+            Destroy(collision.gameObject);
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PowerUp"))
+        {
+            Destroy(other.gameObject);
+            Instantiate(powerup);
+        }
+    }
 }

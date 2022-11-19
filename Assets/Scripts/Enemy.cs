@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Rigidbody enemyRB;
     private Vector3 moveVector;
-    private float speed=40;
+    private float speed=20;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,10 +30,15 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        CollisionBehavior(other);
+    }
+    public virtual void CollisionBehavior(Collider other)
+    {
         if (other.CompareTag("bullet"))
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }
+
 }
