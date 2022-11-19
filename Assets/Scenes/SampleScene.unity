@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91864a7ae4f3a6c4b90a3d03db0769d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerup: {fileID: 763539985470625526, guid: 71c3a54795979504c87bf927462eff77, type: 3}
+  powerup: {fileID: 988547571404289234, guid: 728c077087ada3d42ad0e5d7d3abef8e, type: 3}
   bullet: {fileID: 8718685464108255109, guid: cd3f0adf6a825014f9602794e8e7f9a8, type: 3}
   userInputHorizontal: 0
   rotationSpeed: 350
